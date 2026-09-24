@@ -8,45 +8,412 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
     <title>Z-Movies</title>
+    <style>
+      :root {
+        --sat: env(safe-area-inset-top, 0px);
+        --sab: env(safe-area-inset-bottom, 0px);
+        --sal: env(safe-area-inset-left, 0px);
+        --sar: env(safe-area-inset-right, 0px);
+        --accent: #ff2a44;
+      }
+
+      /* Hide desktop window controls and title bar */
+      .traffic-lights,
+      .traffic-lights *,
+      .tl,
+      .title-strip,
+      .title-strip-drag,
+      .login-chrome,
+      .who-chrome,
+      [aria-label="Contrôles fenêtre"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        pointer-events: none !important;
+      }
+
+      /* ============================================================
+         APPLE LIQUID GLASS MOBILE LAYOUT
+         ============================================================ */
+      @media (max-width: 900px), (pointer: coarse) {
+        /* Eliminate desktop sidebar completely on mobile */
+        .rail-slot,
+        aside.rail {
+          display: none !important;
+          width: 0 !important;
+          min-width: 0 !important;
+          max-width: 0 !important;
+          flex: 0 0 0 !important;
+          overflow: hidden !important;
+          pointer-events: none !important;
+        }
+
+        .layout {
+          display: block !important;
+          width: 100vw !important;
+          max-width: 100vw !important;
+          overflow-x: hidden !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        main.stage {
+          width: 100vw !important;
+          max-width: 100vw !important;
+          margin: 0 !important;
+          padding: calc(env(safe-area-inset-top, 16px) + 52px) 16px calc(env(safe-area-inset-bottom, 16px) + 88px) 16px !important;
+          overflow-x: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Full bleed hero banner */
+        .anime-hero,
+        .hero {
+          width: calc(100% + 32px) !important;
+          margin-left: -16px !important;
+          margin-right: -16px !important;
+          margin-top: calc(-1 * (env(safe-area-inset-top, 16px) + 52px)) !important;
+          height: 52vh !important;
+          min-height: 400px !important;
+          background-size: cover !important;
+          background-position: center 20% !important;
+          position: relative !important;
+          padding-top: calc(env(safe-area-inset-top, 16px) + 60px) !important;
+        }
+
+        .anime-hero::after,
+        .hero::after {
+          content: "" !important;
+          position: absolute !important;
+          inset: 0 !important;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.25) 0%,
+            transparent 30%,
+            rgba(0, 0, 0, 0.65) 70%,
+            #000000 100%
+          ) !important;
+          pointer-events: none !important;
+        }
+
+        /* Liquid Glass CTA Buttons */
+        .hero-btn-play,
+        .btn.cta {
+          background: linear-gradient(135deg, #ff2a44 0%, #d90429 100%) !important;
+          border: 1px solid rgba(255, 255, 255, 0.28) !important;
+          box-shadow: 0 8px 25px rgba(255, 42, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+          border-radius: 999px !important;
+          padding: 12px 24px !important;
+          font-weight: 700 !important;
+        }
+
+        .hero-btn-list,
+        .btn.ghost {
+          background: rgba(255, 255, 255, 0.12) !important;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          border-radius: 999px !important;
+          padding: 12px 20px !important;
+          color: #ffffff !important;
+          backdrop-filter: blur(16px) saturate(180%) !important;
+          -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        }
+
+        /* Smooth card carousel on iOS */
+        .cards-track,
+        .catalog-row,
+        .magazine-track {
+          display: flex !important;
+          overflow-x: auto !important;
+          overflow-y: hidden !important;
+          -webkit-overflow-scrolling: touch !important;
+          scroll-snap-type: x proximity !important;
+          gap: 12px !important;
+          padding: 8px 16px 16px 16px !important;
+          margin-left: -16px !important;
+          margin-right: -16px !important;
+          scrollbar-width: none !important;
+        }
+        .cards-track::-webkit-scrollbar { display: none !important; }
+
+        .title-card,
+        .anime-card,
+        .card {
+          flex: 0 0 135px !important;
+          width: 135px !important;
+          border-radius: 16px !important;
+          overflow: hidden !important;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        /* Movie and Anime Fiche on Mobile */
+        .fiche,
+        .film-fiche {
+          padding-bottom: 96px !important;
+        }
+      }
+
+      /* ============================================================
+         APPLE LIQUID GLASS TOP HEADER
+         ============================================================ */
+      .ios-glass-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: calc(52px + env(safe-area-inset-top, 14px));
+        padding: env(safe-area-inset-top, 14px) 16px 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(10, 10, 14, 0.72);
+        -webkit-backdrop-filter: blur(28px) saturate(200%);
+        backdrop-filter: blur(28px) saturate(200%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+        z-index: 9998;
+        box-sizing: border-box;
+      }
+
+      .ios-glass-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+      .ios-glass-brand img {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: 0 2px 10px rgba(255, 42, 68, 0.4);
+      }
+      .ios-glass-title {
+        font-family: 'Syne', 'Inter', -apple-system, sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+      }
+      .ios-glass-pill {
+        font-size: 9px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 2px 7px;
+        border-radius: 999px;
+        background: rgba(255, 42, 68, 0.22);
+        border: 1px solid rgba(255, 42, 68, 0.45);
+        color: #ff6b8b;
+      }
+
+      .ios-glass-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .ios-glass-action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        cursor: pointer;
+        padding: 0;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+      .ios-glass-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 42, 68, 0.6);
+        object-fit: cover;
+      }
+
+      /* ============================================================
+         APPLE LIQUID GLASS FLOATING BOTTOM DOCK
+         ============================================================ */
+      .ios-liquid-dock {
+        position: fixed;
+        bottom: calc(env(safe-area-inset-bottom, 12px) + 8px);
+        left: 14px;
+        right: 14px;
+        height: 62px;
+        background: rgba(18, 18, 26, 0.78);
+        -webkit-backdrop-filter: blur(35px) saturate(210%);
+        backdrop-filter: blur(35px) saturate(210%);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 32px;
+        box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 6px;
+        z-index: 9999;
+        box-sizing: border-box;
+      }
+
+      .ios-dock-btn {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        height: 50px;
+        border-radius: 22px;
+        color: rgba(255, 255, 255, 0.55);
+        background: transparent;
+        border: none;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        padding: 0;
+      }
+      .ios-dock-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2.1;
+        fill: none;
+        transition: transform 0.2s ease, stroke 0.2s ease;
+      }
+
+      .ios-dock-btn.active {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .ios-dock-btn.active svg {
+        stroke: #ff2a44;
+        transform: scale(1.08);
+      }
+      .ios-dock-btn.active span {
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      /* Hide floating UI during video playback and on LoginGate */
+      body.is-watching .ios-liquid-dock,
+      body.is-watching .ios-glass-header,
+      body.has-login-gate .ios-liquid-dock,
+      body.has-login-gate .ios-glass-header {
+        display: none !important;
+      }
+
+      /* ============================================================
+         APPLE LIQUID GLASS LOGIN GATE CARD
+         ============================================================ */
+      .login-gate {
+        padding: 24px !important;
+        background: radial-gradient(circle at 50% 25%, rgba(255, 42, 68, 0.18), transparent 60%), #000000 !important;
+      }
+      .login-card {
+        width: 100% !important;
+        max-width: 360px !important;
+        background: rgba(20, 18, 28, 0.78) !important;
+        -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+        backdrop-filter: blur(40px) saturate(200%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        border-radius: 32px !important;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        padding: 32px 24px !important;
+      }
+      .login-actions .btn {
+        border-radius: 999px !important;
+        padding: 13px 20px !important;
+        font-weight: 700 !important;
+        font-size: 14.5px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+      }
+      .login-actions .btn.cta {
+        background: #5865F2 !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+      }
+      .login-actions .btn:not(.cta) {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+      }
+      .login-guest-trigger {
+        margin-top: 14px;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+    </style>
     <script>
       window.isTauri = true;
 
-      var DEFAULT_USER = {
-        id: 'ares_ios',
-        username: 'Ares',
-        avatar: 'https://cdn.discordapp.com/embed/avatars/0.png',
-        discordId: 'ares',
-        googleId: null
-      };
-      var DEFAULT_SESSION = {
-        token: 'ios_guest_token',
-        user: DEFAULT_USER
-      };
-      var DEFAULT_PROFILE = {
-        id: 'account_ares_ios',
-        name: 'Ares',
-        avatarUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
-        isAccount: true,
-        createdAt: Date.now()
-      };
-
       try {
-        var existingSession = localStorage.getItem('zflix.auth.session');
-        if (!existingSession || existingSession === 'null') {
-          localStorage.setItem('zflix.auth.session', JSON.stringify(DEFAULT_SESSION));
+        var prevSession = localStorage.getItem('zflix.auth.session');
+        if (prevSession && prevSession.includes('ios_guest_token')) {
+          localStorage.removeItem('zflix.auth.session');
+          localStorage.removeItem('zflix.watch.active');
         }
-        var existingProfiles = localStorage.getItem('zflix.watch.profiles');
-        if (!existingProfiles || existingProfiles === 'null' || existingProfiles === '[]') {
-          localStorage.setItem('zflix.watch.profiles', JSON.stringify([DEFAULT_PROFILE]));
-        }
-        var existingActive = localStorage.getItem('zflix.watch.active');
-        if (!existingActive || existingActive === 'null') {
-          localStorage.setItem('zflix.watch.active', DEFAULT_PROFILE.id);
-        }
-      } catch (e) {
-        console.warn('Init storage error:', e);
-      }
+      } catch (e) {}
 
+      // ── Process incoming OAuth token & user from callback redirect ──
+      (function checkOAuthCallback() {
+        try {
+          var qs = window.location.search || (window.location.hash ? window.location.hash.slice(1) : '');
+          if (!qs) return;
+          var p = new URLSearchParams(qs);
+          var token = p.get('token');
+          var userRaw = p.get('user');
+          if (token && userRaw) {
+            var u = JSON.parse(decodeURIComponent(userRaw));
+            var session = {
+              token: token,
+              user: {
+                id: String(u.id || 'u_' + Date.now()),
+                username: u.username || u.name || 'Membre Z-Flix',
+                avatar: u.avatar ? (u.avatar.startsWith('http') ? u.avatar : 'https://cdn.discordapp.com/avatars/' + u.id + '/' + u.avatar + '.png?size=128') : (u.picture || null),
+                discordId: u.id || null,
+                googleId: u.google_id || null
+              }
+            };
+            var profile = {
+              id: 'account_' + session.user.id,
+              name: session.user.username,
+              avatarUrl: session.user.avatar || './icon.png',
+              isAccount: true,
+              createdAt: Date.now()
+            };
+            localStorage.setItem('zflix.auth.session', JSON.stringify(session));
+            localStorage.setItem('zflix.watch.profiles', JSON.stringify([profile]));
+            localStorage.setItem('zflix.watch.active', profile.id);
+            if (window.history && window.history.replaceState) {
+              window.history.replaceState({}, document.title, window.location.pathname);
+            }
+          }
+        } catch (err) {
+          console.error('[OAuth Callback Error]', err);
+        }
+      })();
+
+      // ── Tauri Bridge Mock for iOS Capacitor WKWebView ──
       var eventListeners = {};
       function emitTauriEvent(eventName, payload) {
         var list = eventListeners[eventName] || [];
@@ -92,37 +459,14 @@
               var s = localStorage.getItem('zflix.auth.session');
               if (s) return JSON.parse(s);
             } catch (e) {}
-            return DEFAULT_SESSION;
+            return null;
           }
           if (cmd === 'start_oauth') {
             var provider = (args && args.provider) || 'discord';
-            var provLabel = provider === 'google' ? 'Google' : 'Discord';
-            var sess = {
-              token: 'ios_' + Date.now(),
-              user: {
-                id: 'ares_ios',
-                username: 'Ares (' + provLabel + ')',
-                avatar: 'https://cdn.discordapp.com/embed/avatars/0.png',
-                discordId: provider === 'discord' ? 'ares_discord' : null,
-                googleId: provider === 'google' ? 'ares_google' : null
-              }
-            };
-            var prof = {
-              id: 'account_ares_ios',
-              name: 'Ares (' + provLabel + ')',
-              avatarUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
-              isAccount: true,
-              createdAt: Date.now()
-            };
-            try {
-              localStorage.setItem('zflix.auth.session', JSON.stringify(sess));
-              localStorage.setItem('zflix.watch.profiles', JSON.stringify([prof]));
-              localStorage.setItem('zflix.watch.active', prof.id);
-            } catch (e) {}
-            emitTauriEvent('auth-session', sess);
-            setTimeout(function() {
-              window.location.reload();
-            }, 50);
+            var returnTo = 'http://localhost/';
+            var authUrl = 'https://streaming-api.cardz.workers.dev/auth/' + provider + '?return_to=' + encodeURIComponent(returnTo);
+            // Navigate to official Discord or Google OAuth page
+            window.location.href = authUrl;
             return null;
           }
           if (cmd === 'logout_auth') {
@@ -171,35 +515,153 @@
           return null;
         }
       };
-      window.addEventListener('error', function(e) {
-        console.error('App Error:', e.error || e.message);
+
+      // ── Initialize Mobile Apple Liquid Glass UI ──
+      window.addEventListener('DOMContentLoaded', function() {
+        // Append top header
+        var header = document.createElement('header');
+        header.className = 'ios-glass-header';
+        header.id = 'iosHeader';
+        header.innerHTML = [
+          '<div class="ios-glass-brand" id="iosBrand">',
+          '  <img src="./icon.png" alt="Z-Movies" />',
+          '  <span class="ios-glass-title">Z-MOVIES</span>',
+          '  <span class="ios-glass-pill">iOS</span>',
+          '</div>',
+          '<div class="ios-glass-actions">',
+          '  <button type="button" class="ios-glass-action-btn" id="iosSearchTrigger" aria-label="Recherche">',
+          '    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+          '  </button>',
+          '  <button type="button" class="ios-glass-action-btn" id="iosProfileTrigger" aria-label="Profil">',
+          '    <img class="ios-glass-avatar" id="iosAvatar" src="./icon.png" alt="Avatar" />',
+          '  </button>',
+          '</div>'
+        ].join('');
+        document.body.appendChild(header);
+
+        // Append floating liquid glass dock
+        var dock = document.createElement('nav');
+        dock.className = 'ios-liquid-dock';
+        dock.id = 'iosDock';
+        dock.innerHTML = [
+          '<button type="button" class="ios-dock-btn active" data-tab="home">',
+          '  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>',
+          '  <span>Accueil</span>',
+          '</button>',
+          '<button type="button" class="ios-dock-btn" data-tab="catalog">',
+          '  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>',
+          '  <span>Films</span>',
+          '</button>',
+          '<button type="button" class="ios-dock-btn" data-tab="series">',
+          '  <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>',
+          '  <span>Séries</span>',
+          '</button>',
+          '<button type="button" class="ios-dock-btn" data-tab="list">',
+          '  <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>',
+          '  <span>Ma Liste</span>',
+          '</button>',
+          '<button type="button" class="ios-dock-btn" data-tab="settings">',
+          '  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>',
+          '  <span>Compte</span>',
+          '</button>'
+        ].join('');
+        document.body.appendChild(dock);
+
+        // Connect dock buttons to React navigation actions
+        dock.addEventListener('click', function(e) {
+          var btn = e.target.closest('.ios-dock-btn');
+          if (!btn) return;
+          var tab = btn.getAttribute('data-tab');
+          dock.querySelectorAll('.ios-dock-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+
+          if (tab === 'home') {
+            var b = document.querySelector('button[aria-label="Accueil"]') || document.querySelector('.film-back') || document.querySelector('button.ghost');
+            if (b) b.click();
+          } else if (tab === 'catalog') {
+            var b = document.querySelector('button[aria-label="Films"]') || document.querySelector('button[aria-label="Catalogue"]');
+            if (b) b.click();
+          } else if (tab === 'series') {
+            var b = document.querySelector('button[aria-label="Séries"]') || document.querySelector('button[aria-label="Catalogue"]');
+            if (b) b.click();
+          } else if (tab === 'list') {
+            var b = document.querySelector('button[aria-label="Ma liste"]');
+            if (b) b.click();
+          } else if (tab === 'settings') {
+            var b = document.querySelector('button[aria-label="Paramètres"]') || document.querySelector('.profile-chip');
+            if (b) b.click();
+          }
+        });
+
+        // Top Header triggers
+        document.getElementById('iosBrand').addEventListener('click', function() {
+          var b = document.querySelector('button[aria-label="Accueil"]') || document.querySelector('.film-back') || document.querySelector('button.ghost');
+          if (b) b.click();
+        });
+
+        document.getElementById('iosSearchTrigger').addEventListener('click', function() {
+          var s = document.querySelector('input[type="search"]') || document.querySelector('.rail-search input');
+          if (s) {
+            s.focus();
+            s.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+
+        document.getElementById('iosProfileTrigger').addEventListener('click', function() {
+          var p = document.querySelector('.profile-chip') || document.querySelector('button[aria-label="Paramètres"]');
+          if (p) p.click();
+        });
+
+        // Sync avatar image from localStorage
+        try {
+          var s = JSON.parse(localStorage.getItem('zflix.auth.session') || 'null');
+          if (s && s.user && s.user.avatar) {
+            document.getElementById('iosAvatar').src = s.user.avatar;
+          }
+        } catch(e){}
+
+        // State observer for video playback and LoginGate
+        setInterval(function() {
+          var isPlaying = !!(document.querySelector('video') || document.querySelector('.anime-player') || document.querySelector('.film-player'));
+          var hasLogin = !!document.querySelector('.login-gate');
+          if (isPlaying) document.body.classList.add('is-watching');
+          else document.body.classList.remove('is-watching');
+          if (hasLogin) {
+            document.body.classList.add('has-login-gate');
+            var acts = document.querySelector('.login-actions');
+            if (acts && !document.getElementById('guestLoginBtn')) {
+              var gBtn = document.createElement('button');
+              gBtn.id = 'guestLoginBtn';
+              gBtn.className = 'login-guest-trigger';
+              gBtn.type = 'button';
+              gBtn.innerText = 'Continuer en mode Invité (sans compte)';
+              gBtn.onclick = function() {
+                var guestSess = {
+                  token: 'ios_guest_' + Date.now(),
+                  user: { id: 'guest_' + Date.now(), username: 'Invité', avatar: './icon.png', discordId: null, googleId: null }
+                };
+                var guestProf = {
+                  id: 'account_' + guestSess.user.id,
+                  name: 'Invité',
+                  avatarUrl: './icon.png',
+                  isAccount: true,
+                  createdAt: Date.now()
+                };
+                localStorage.setItem('zflix.auth.session', JSON.stringify(guestSess));
+                localStorage.setItem('zflix.watch.profiles', JSON.stringify([guestProf]));
+                localStorage.setItem('zflix.watch.active', guestProf.id);
+                window.location.reload();
+              };
+              acts.appendChild(gBtn);
+            }
+          } else {
+            document.body.classList.remove('has-login-gate');
+          }
+        }, 300);
       });
     </script>
     <script type="module" crossorigin src="./assets/index-CATjVLLN.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BU7SlWYc.css">
-    <style>
-      .traffic-lights,
-      .traffic-lights *,
-      .tl,
-      .title-strip,
-      .title-strip-drag,
-      .login-chrome,
-      .who-chrome,
-      [aria-label="Contrôles fenêtre"] {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        min-height: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        pointer-events: none !important;
-      }
-      .app, .shell {
-        padding-top: env(safe-area-inset-top, 0px);
-        padding-bottom: env(safe-area-inset-bottom, 0px);
-        box-sizing: border-box;
-      }
-    </style>
   </head>
   <body style="background-color: #000000; margin: 0; padding: 0; overflow-x: hidden;">
     <div id="root"></div>

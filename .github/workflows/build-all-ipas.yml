@@ -31,6 +31,19 @@ jobs:
           npm install @capacitor/core@latest @capacitor/cli@latest @capacitor/ios@latest
           cp -r ../web/z-movies ./dist
           npx cap init "Z-Movies" "com.zflix.movies" --web-dir ./dist
+          cat << 'EOF' > capacitor.config.json
+{
+  "appId": "com.zflix.movies",
+  "appName": "Z-Movies",
+  "webDir": "dist",
+  "server": {
+    "iosScheme": "http",
+    "hostname": "localhost",
+    "cleartext": true
+  },
+  "overrideUserAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
+}
+EOF
           npx cap add ios
 
           # Configure AppIcon with modern single 1024x1024 icon
@@ -40,8 +53,8 @@ jobs:
 
           # Configure Info.plist with correct name, version, status bar, and ATS
           plutil -replace CFBundleDisplayName -string "Z-Movies" ios/App/App/Info.plist || true
-          plutil -replace CFBundleShortVersionString -string "6.0.64" ios/App/App/Info.plist || true
-          plutil -replace CFBundleVersion -string "6.0.64" ios/App/App/Info.plist || true
+          plutil -replace CFBundleShortVersionString -string "6.1.0" ios/App/App/Info.plist || true
+          plutil -replace CFBundleVersion -string "6.1.0" ios/App/App/Info.plist || true
           plutil -replace NSAppTransportSecurity -xml "<dict><key>NSAllowsArbitraryLoads</key><true/></dict>" ios/App/App/Info.plist || true
           plutil -replace UIViewControllerBasedStatusBarAppearance -bool false ios/App/App/Info.plist || true
           plutil -replace UIStatusBarStyle -string "UIStatusBarStyleLightContent" ios/App/App/Info.plist || true
@@ -83,8 +96,8 @@ jobs:
       - name: Release Z-Movies IPA
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v6.0.64"
-          name: "Z-Movies iOS v6.0.64"
+          tag_name: "v6.1.0"
+          name: "Z-Movies iOS v6.1.0"
           body: |
             ### Z-Movies iOS — Liquid Glass Edition
             * Version officielle iOS prête pour Feather, AltStore, SideStore et TrollStore
@@ -116,6 +129,19 @@ jobs:
           npm install @capacitor/core@latest @capacitor/cli@latest @capacitor/ios@latest
           cp -r ../web/z-animes ./dist
           npx cap init "Z-Animes" "com.zflix.animes" --web-dir ./dist
+          cat << 'EOF' > capacitor.config.json
+{
+  "appId": "com.zflix.animes",
+  "appName": "Z-Animes",
+  "webDir": "dist",
+  "server": {
+    "iosScheme": "http",
+    "hostname": "localhost",
+    "cleartext": true
+  },
+  "overrideUserAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
+}
+EOF
           npx cap add ios
 
           # Configure AppIcon with modern single 1024x1024 icon
@@ -125,8 +151,8 @@ jobs:
 
           # Configure Info.plist with correct name, version, status bar, and ATS
           plutil -replace CFBundleDisplayName -string "Z-Animes" ios/App/App/Info.plist || true
-          plutil -replace CFBundleShortVersionString -string "6.0.118" ios/App/App/Info.plist || true
-          plutil -replace CFBundleVersion -string "6.0.118" ios/App/App/Info.plist || true
+          plutil -replace CFBundleShortVersionString -string "6.1.1" ios/App/App/Info.plist || true
+          plutil -replace CFBundleVersion -string "6.1.1" ios/App/App/Info.plist || true
           plutil -replace NSAppTransportSecurity -xml "<dict><key>NSAllowsArbitraryLoads</key><true/></dict>" ios/App/App/Info.plist || true
           plutil -replace UIViewControllerBasedStatusBarAppearance -bool false ios/App/App/Info.plist || true
           plutil -replace UIStatusBarStyle -string "UIStatusBarStyleLightContent" ios/App/App/Info.plist || true
@@ -168,8 +194,8 @@ jobs:
       - name: Release Z-Animes IPA
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v6.0.118"
-          name: "Z-Animes iOS v6.0.118"
+          tag_name: "v6.1.1"
+          name: "Z-Animes iOS v6.1.1"
           body: |
             ### Z-Animes iOS — Liquid Glass Edition
             * Version officielle iOS prête pour Feather, AltStore, SideStore et TrollStore
