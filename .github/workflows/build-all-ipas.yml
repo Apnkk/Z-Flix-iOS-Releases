@@ -40,8 +40,8 @@ jobs:
 
           # Configure Info.plist with correct name, version, status bar, and ATS
           plutil -replace CFBundleDisplayName -string "Z-Movies" ios/App/App/Info.plist || true
-          plutil -replace CFBundleShortVersionString -string "6.0.63" ios/App/App/Info.plist || true
-          plutil -replace CFBundleVersion -string "6.0.63" ios/App/App/Info.plist || true
+          plutil -replace CFBundleShortVersionString -string "6.0.64" ios/App/App/Info.plist || true
+          plutil -replace CFBundleVersion -string "6.0.64" ios/App/App/Info.plist || true
           plutil -replace NSAppTransportSecurity -xml "<dict><key>NSAllowsArbitraryLoads</key><true/></dict>" ios/App/App/Info.plist || true
           plutil -replace UIViewControllerBasedStatusBarAppearance -bool false ios/App/App/Info.plist || true
           plutil -replace UIStatusBarStyle -string "UIStatusBarStyleLightContent" ios/App/App/Info.plist || true
@@ -83,8 +83,8 @@ jobs:
       - name: Release Z-Movies IPA
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v6.0.63"
-          name: "Z-Movies iOS v6.0.63"
+          tag_name: "v6.0.64"
+          name: "Z-Movies iOS v6.0.64"
           body: |
             ### Z-Movies iOS — Liquid Glass Edition
             * Version officielle iOS prête pour Feather, AltStore, SideStore et TrollStore
@@ -125,8 +125,8 @@ jobs:
 
           # Configure Info.plist with correct name, version, status bar, and ATS
           plutil -replace CFBundleDisplayName -string "Z-Animes" ios/App/App/Info.plist || true
-          plutil -replace CFBundleShortVersionString -string "6.0.117" ios/App/App/Info.plist || true
-          plutil -replace CFBundleVersion -string "6.0.117" ios/App/App/Info.plist || true
+          plutil -replace CFBundleShortVersionString -string "6.0.118" ios/App/App/Info.plist || true
+          plutil -replace CFBundleVersion -string "6.0.118" ios/App/App/Info.plist || true
           plutil -replace NSAppTransportSecurity -xml "<dict><key>NSAllowsArbitraryLoads</key><true/></dict>" ios/App/App/Info.plist || true
           plutil -replace UIViewControllerBasedStatusBarAppearance -bool false ios/App/App/Info.plist || true
           plutil -replace UIStatusBarStyle -string "UIStatusBarStyleLightContent" ios/App/App/Info.plist || true
@@ -168,8 +168,8 @@ jobs:
       - name: Release Z-Animes IPA
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v6.0.117"
-          name: "Z-Animes iOS v6.0.117"
+          tag_name: "v6.0.118"
+          name: "Z-Animes iOS v6.0.118"
           body: |
             ### Z-Animes iOS — Liquid Glass Edition
             * Version officielle iOS prête pour Feather, AltStore, SideStore et TrollStore
