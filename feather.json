@@ -1,0 +1,35 @@
+{
+  "name": "Z-Flix By Ares",
+  "subtitle": "Z-Movies & Z-Animes — Liquid Glass UI",
+  "description": "Official Z-Flix iOS releases repository for Feather and AltStore. Watch Movies, Series, and Animes with a sleek Liquid Glass UI.",
+  "iconURL": "https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/assets/ares_logo.png",
+  "website": "https://aress.ovh",
+  "apps": [
+    {
+      "name": "Z-Movies",
+      "bundleIdentifier": "com.zflix.movies",
+      "developerName": "Ares",
+      "version": "6.0.63",
+      "versionDate": "2026-09-24T21:30:00Z",
+      "versionDescription": "Release v6.0.63: Z-Movies iOS Edition with Liquid Glass UI & AMOLED Dark Mode.",
+      "downloadURL": "https://github.com/Apnkk/Z-Flix-iOS-Releases/releases/download/v6.0.63/Z-Movies.ipa",
+      "localizedDescription": "Regardez vos films et séries préférés en haute définition sans publicités avec une interface moderne Liquid Glass Apple, lecteur vidéo HLS intégré et fluidité maximale.",
+      "iconURL": "https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/assets/zmovies_icon.png",
+      "tintColor": "E50914",
+      "size": 25000000
+    },
+    {
+      "name": "Z-Animes",
+      "bundleIdentifier": "com.zflix.animes",
+      "developerName": "Ares",
+      "version": "6.0.117",
+      "versionDate": "2026-09-24T21:30:00Z",
+      "versionDescription": "Release v6.0.117: Z-Animes iOS Edition with Liquid Glass UI & AMOLED Dark Mode.",
+      "downloadURL": "https://github.com/Apnkk/Z-Flix-iOS-Releases/releases/download/v6.0.117/Z-Animes.ipa",
+      "localizedDescription": "Le meilleur des animes et mangas en streaming illimité, VF et VOSTFR avec l'interface Liquid Glass d'Apple, synchronisation des épisodes et lecteur vidéo optimisé.",
+      "iconURL": "https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/assets/zanimes_icon.png",
+      "tintColor": "FF6B00",
+      "size": 25000000
+    }
+  ]
+}

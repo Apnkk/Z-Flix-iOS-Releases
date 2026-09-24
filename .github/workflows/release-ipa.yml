@@ -1,0 +1,61 @@
+name: Release iOS IPA & Update Feather Source
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_type:
+        description: 'App to release (movies, animes, both)'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - movies
+          - animes
+          - both
+      version_tag:
+        description: 'Version tag (e.g. v6.0.64)'
+        required: true
+        default: 'v6.0.64'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Update Feather Source
+        run: |
+          NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          TAG="${{ github.event.inputs.version_tag }}"
+          VER="${TAG#v}"
+
+          python3 -c "
+          import json
+
+          with open('feather.json', 'r') as f:
+              data = json.load(f)
+
+          app_choice = '${{ github.event.inputs.app_type }}'
+
+          for app in data.get('apps', []):
+              if app_choice in ['both', 'movies'] and app.get('name') == 'Z-Movies':
+                  app['version'] = '$VER'
+                  app['versionDate'] = '$NOW'
+                  app['downloadURL'] = f'https://github.com/Apnkk/Z-Flix-iOS-Releases/releases/download/$TAG/Z-Movies.ipa'
+              elif app_choice in ['both', 'animes'] and app.get('name') == 'Z-Animes':
+                  app['version'] = '$VER'
+                  app['versionDate'] = '$NOW'
+                  app['downloadURL'] = f'https://github.com/Apnkk/Z-Flix-iOS-Releases/releases/download/$TAG/Z-Animes.ipa'
+
+          with open('feather.json', 'w') as f:
+              json.dump(data, f, indent=2)
+          "
+
+          git config user.name "Apnkk"
+          git config user.email "apnkk@users.noreply.github.com"
+          git add feather.json
+          git commit -m "chore: update feather.json to $TAG" || true
+          git push origin main || true
