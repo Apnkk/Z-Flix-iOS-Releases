@@ -1,8 +1,9 @@
 {
+  "identifier": "com.zflix.ios.repo",
   "name": "Z-Flix By Ares",
   "subtitle": "Z-Movies & Z-Animes — Liquid Glass UI",
   "description": "Official Z-Flix iOS releases repository for Feather and AltStore. Watch Movies, Series, and Animes with a sleek Liquid Glass UI.",
-  "iconURL": "https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/assets/repo_icon.png",
+  "iconURL": "https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/assets/repo_icon.png?v=2",
   "website": "https://aress.ovh",
   "apps": [
     {
