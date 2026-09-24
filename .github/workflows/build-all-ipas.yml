@@ -31,19 +31,7 @@ jobs:
           npm install @capacitor/core@latest @capacitor/cli@latest @capacitor/ios@latest
           cp -r ../web/z-movies ./dist
           npx cap init "Z-Movies" "com.zflix.movies" --web-dir ./dist
-          cat << 'EOF' > capacitor.config.json
-{
-  "appId": "com.zflix.movies",
-  "appName": "Z-Movies",
-  "webDir": "dist",
-  "server": {
-    "iosScheme": "http",
-    "hostname": "localhost",
-    "cleartext": true
-  },
-  "overrideUserAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
-}
-EOF
+          echo '{"appId":"com.zflix.movies","appName":"Z-Movies","webDir":"dist","server":{"iosScheme":"http","hostname":"localhost","cleartext":true},"overrideUserAgent":"Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"}' > capacitor.config.json
           npx cap add ios
 
           # Configure AppIcon with modern single 1024x1024 icon
@@ -129,19 +117,7 @@ EOF
           npm install @capacitor/core@latest @capacitor/cli@latest @capacitor/ios@latest
           cp -r ../web/z-animes ./dist
           npx cap init "Z-Animes" "com.zflix.animes" --web-dir ./dist
-          cat << 'EOF' > capacitor.config.json
-{
-  "appId": "com.zflix.animes",
-  "appName": "Z-Animes",
-  "webDir": "dist",
-  "server": {
-    "iosScheme": "http",
-    "hostname": "localhost",
-    "cleartext": true
-  },
-  "overrideUserAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
-}
-EOF
+          echo '{"appId":"com.zflix.animes","appName":"Z-Animes","webDir":"dist","server":{"iosScheme":"http","hostname":"localhost","cleartext":true},"overrideUserAgent":"Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"}' > capacitor.config.json
           npx cap add ios
 
           # Configure AppIcon with modern single 1024x1024 icon
