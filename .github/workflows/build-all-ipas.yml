@@ -40,8 +40,14 @@ jobs:
       - name: Build iOS Archive with Xcode
         run: |
           cd build_movies/ios/App
+          if [ -d "App.xcworkspace" ]; then
+            TARGET="-workspace App.xcworkspace"
+          else
+            TARGET="-project App.xcodeproj"
+          fi
+
           xcodebuild archive \
-            -workspace App.xcworkspace \
+            $TARGET \
             -scheme App \
             -configuration Release \
             -destination 'generic/platform=iOS' \
@@ -54,7 +60,8 @@ jobs:
         run: |
           rm -rf "$RUNNER_TEMP/Payload"
           mkdir -p "$RUNNER_TEMP/Payload"
-          cp -r "$RUNNER_TEMP/Z-Movies.xcarchive/Products/Applications/App.app" "$RUNNER_TEMP/Payload/Z-Movies.app"
+          APP_PATH=$(ls -d "$RUNNER_TEMP/Z-Movies.xcarchive/Products/Applications/"*.app | head -n 1)
+          cp -r "$APP_PATH" "$RUNNER_TEMP/Payload/Z-Movies.app"
           cd "$RUNNER_TEMP"
           zip -r9 "$GITHUB_WORKSPACE/Z-Movies.ipa" Payload
 
@@ -110,8 +117,14 @@ jobs:
       - name: Build iOS Archive with Xcode
         run: |
           cd build_animes/ios/App
+          if [ -d "App.xcworkspace" ]; then
+            TARGET="-workspace App.xcworkspace"
+          else
+            TARGET="-project App.xcodeproj"
+          fi
+
           xcodebuild archive \
-            -workspace App.xcworkspace \
+            $TARGET \
             -scheme App \
             -configuration Release \
             -destination 'generic/platform=iOS' \
@@ -124,7 +137,8 @@ jobs:
         run: |
           rm -rf "$RUNNER_TEMP/Payload"
           mkdir -p "$RUNNER_TEMP/Payload"
-          cp -r "$RUNNER_TEMP/Z-Animes.xcarchive/Products/Applications/App.app" "$RUNNER_TEMP/Payload/Z-Animes.app"
+          APP_PATH=$(ls -d "$RUNNER_TEMP/Z-Animes.xcarchive/Products/Applications/"*.app | head -n 1)
+          cp -r "$APP_PATH" "$RUNNER_TEMP/Payload/Z-Animes.app"
           cd "$RUNNER_TEMP"
           zip -r9 "$GITHUB_WORKSPACE/Z-Animes.ipa" Payload
 
