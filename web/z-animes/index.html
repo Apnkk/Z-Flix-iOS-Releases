@@ -10,6 +10,57 @@
     <title>Z-Animes</title>
     <script>
       window.isTauri = true;
+
+      var DEFAULT_USER = {
+        id: 'ares_ios',
+        username: 'Ares',
+        avatar: 'https://cdn.discordapp.com/embed/avatars/0.png',
+        discordId: 'ares',
+        googleId: null
+      };
+      var DEFAULT_SESSION = {
+        token: 'ios_guest_token',
+        user: DEFAULT_USER
+      };
+      var DEFAULT_PROFILE = {
+        id: 'account_ares_ios',
+        name: 'Ares',
+        avatarUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
+        isAccount: true,
+        createdAt: Date.now()
+      };
+
+      try {
+        var existingSession = localStorage.getItem('zflix.auth.session');
+        if (!existingSession || existingSession === 'null') {
+          localStorage.setItem('zflix.auth.session', JSON.stringify(DEFAULT_SESSION));
+        }
+        var existingProfiles = localStorage.getItem('zflix.watch.profiles');
+        if (!existingProfiles || existingProfiles === 'null' || existingProfiles === '[]') {
+          localStorage.setItem('zflix.watch.profiles', JSON.stringify([DEFAULT_PROFILE]));
+        }
+        var existingActive = localStorage.getItem('zflix.watch.active');
+        if (!existingActive || existingActive === 'null') {
+          localStorage.setItem('zflix.watch.active', DEFAULT_PROFILE.id);
+        }
+      } catch (e) {
+        console.warn('Init storage error:', e);
+      }
+
+      var eventListeners = {};
+      function emitTauriEvent(eventName, payload) {
+        var list = eventListeners[eventName] || [];
+        list.forEach(function(fnId) {
+          if (typeof window['_' + fnId] === 'function') {
+            try {
+              window['_' + fnId]({ event: eventName, payload: payload });
+            } catch (err) {
+              console.error(err);
+            }
+          }
+        });
+      }
+
       window.__TAURI_INTERNALS__ = {
         metadata: {
           currentWindow: { label: 'main' },
@@ -26,13 +77,72 @@
         invoke: async function(cmd, args) {
           console.log('[Tauri Bridge]', cmd, args);
           if (cmd === 'start_media_proxy') return 0;
-          if (cmd === 'plugin:event|listen') return 1;
+          if (cmd === 'plugin:event|listen') {
+            var evt = args && args.event;
+            var handlerId = args && args.handler;
+            if (evt && handlerId) {
+              eventListeners[evt] = eventListeners[evt] || [];
+              eventListeners[evt].push(handlerId);
+            }
+            return 1;
+          }
           if (cmd === 'plugin:event|unlisten') return;
-          if (cmd === 'plugin:window|is_maximized') return true;
-          if (cmd === 'plugin:window|on_resized') return 1;
+          if (cmd === 'get_auth_session') {
+            try {
+              var s = localStorage.getItem('zflix.auth.session');
+              if (s) return JSON.parse(s);
+            } catch (e) {}
+            return DEFAULT_SESSION;
+          }
+          if (cmd === 'start_oauth') {
+            var provider = (args && args.provider) || 'discord';
+            var provLabel = provider === 'google' ? 'Google' : 'Discord';
+            var sess = {
+              token: 'ios_' + Date.now(),
+              user: {
+                id: 'ares_ios',
+                username: 'Ares (' + provLabel + ')',
+                avatar: 'https://cdn.discordapp.com/embed/avatars/0.png',
+                discordId: provider === 'discord' ? 'ares_discord' : null,
+                googleId: provider === 'google' ? 'ares_google' : null
+              }
+            };
+            var prof = {
+              id: 'account_ares_ios',
+              name: 'Ares (' + provLabel + ')',
+              avatarUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
+              isAccount: true,
+              createdAt: Date.now()
+            };
+            try {
+              localStorage.setItem('zflix.auth.session', JSON.stringify(sess));
+              localStorage.setItem('zflix.watch.profiles', JSON.stringify([prof]));
+              localStorage.setItem('zflix.watch.active', prof.id);
+            } catch (e) {}
+            emitTauriEvent('auth-session', sess);
+            setTimeout(function() {
+              window.location.reload();
+            }, 50);
+            return null;
+          }
           if (cmd === 'logout_auth') {
-            try { localStorage.clear(); } catch(e){}
+            try {
+              localStorage.removeItem('zflix.auth.session');
+              localStorage.removeItem('zflix.watch.active');
+            } catch (e) {}
+            emitTauriEvent('auth-session', null);
             return;
+          }
+          if (cmd === 'plugin:opener|open_url') {
+            if (args && args.url) window.open(args.url, '_blank');
+            return;
+          }
+          if (cmd === 'open') {
+            if (args && args.path) window.open(args.path, '_blank');
+            return;
+          }
+          if (cmd.startsWith('plugin:window|') || cmd.startsWith('plugin:webview|')) {
+            return true;
           }
           if (cmd === 'fetch_text' || cmd === 'fetch_text_insecure') {
             try {

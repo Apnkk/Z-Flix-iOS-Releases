@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'web/**'
+      - 'assets/**'
       - '.github/workflows/build-all-ipas.yml'
 
 jobs:
