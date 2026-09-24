@@ -32,10 +32,30 @@ jobs:
           npx cap init "Z-Movies" "com.zflix.movies" --web-dir ./dist
           npx cap add ios
 
-          # Copy app icon if available
-          if [ -f "../assets/zmovies_icon.png" ]; then
-            cp ../assets/zmovies_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png 2>/dev/null || true
-          fi
+          # Configure AppIcon with modern single 1024x1024 icon
+          rm -rf ios/App/App/Assets.xcassets/AppIcon.appiconset/*
+          cp ../assets/zmovies_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/icon.png
+          cat << 'EOF' > ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
+{
+  "images" : [
+    {
+      "filename" : "icon.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
+EOF
+
+          # Configure Info.plist with correct name and version
+          plutil -replace CFBundleDisplayName -string "Z-Movies" ios/App/App/Info.plist || true
+          plutil -replace CFBundleShortVersionString -string "6.0.63" ios/App/App/Info.plist || true
+          plutil -replace CFBundleVersion -string "6.0.63" ios/App/App/Info.plist || true
 
       - name: Build iOS Archive with Xcode
         run: |
@@ -109,10 +129,30 @@ jobs:
           npx cap init "Z-Animes" "com.zflix.animes" --web-dir ./dist
           npx cap add ios
 
-          # Copy app icon if available
-          if [ -f "../assets/zanimes_icon.png" ]; then
-            cp ../assets/zanimes_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png 2>/dev/null || true
-          fi
+          # Configure AppIcon with modern single 1024x1024 icon
+          rm -rf ios/App/App/Assets.xcassets/AppIcon.appiconset/*
+          cp ../assets/zanimes_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/icon.png
+          cat << 'EOF' > ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
+{
+  "images" : [
+    {
+      "filename" : "icon.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
+EOF
+
+          # Configure Info.plist with correct name and version
+          plutil -replace CFBundleDisplayName -string "Z-Animes" ios/App/App/Info.plist || true
+          plutil -replace CFBundleShortVersionString -string "6.0.117" ios/App/App/Info.plist || true
+          plutil -replace CFBundleVersion -string "6.0.117" ios/App/App/Info.plist || true
 
       - name: Build iOS Archive with Xcode
         run: |
