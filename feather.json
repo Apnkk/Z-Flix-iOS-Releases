@@ -11,26 +11,26 @@
       "bundleIdentifier": "com.zflix.movies",
       "developerName": "Ares",
       "version": "6.1.2",
-      "versionDate": "2026-09-24T23:55:00Z",
+      "versionDate": "2026-09-24T23:58:03Z",
       "versionDescription": "Release v6.1.2: Authentic Apple Liquid Glass UI, smooth vertical card scrolling, in-app Discord & direct Google login.",
       "downloadURL": "https://github.com/Apnkk/Z-Flix-iOS-Releases/releases/download/v6.1.2/Z-Movies.ipa",
-      "localizedDescription": "Regardez vos films et séries préférés en haute définition sans publicités avec une interface moderne Liquid Glass Apple, lecteur vidéo HLS intégré et fluidité maximale.",
+      "localizedDescription": "Regardez vos films et s\u00e9ries pr\u00e9f\u00e9r\u00e9s en haute d\u00e9finition sans publicit\u00e9s avec une interface moderne Liquid Glass Apple, lecteur vid\u00e9o HLS int\u00e9gr\u00e9 et fluidit\u00e9 maximale.",
       "iconURL": "https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/assets/zmovies_icon.png?v=7",
       "tintColor": "E50914",
-      "size": 23257232
+      "size": 23258049
     },
     {
       "name": "Z-Animes",
       "bundleIdentifier": "com.zflix.animes",
       "developerName": "Ares",
       "version": "6.1.3",
-      "versionDate": "2026-09-24T23:55:00Z",
+      "versionDate": "2026-09-24T23:58:03Z",
       "versionDescription": "Release v6.1.3: Authentic Apple Liquid Glass UI, smooth vertical card scrolling, in-app Discord & direct Google login.",
       "downloadURL": "https://github.com/Apnkk/Z-Flix-iOS-Releases/releases/download/v6.1.3/Z-Animes.ipa",
-      "localizedDescription": "Le meilleur des animes et mangas en streaming illimité, VF et VOSTFR avec l'interface Liquid Glass d'Apple, synchronisation des épisodes et lecteur vidéo optimisé.",
+      "localizedDescription": "Le meilleur des animes et mangas en streaming illimit\u00e9, VF et VOSTFR avec l'interface Liquid Glass d'Apple, synchronisation des \u00e9pisodes et lecteur vid\u00e9o optimis\u00e9.",
       "iconURL": "https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/assets/zanimes_icon.png?v=7",
       "tintColor": "FF6B00",
-      "size": 11823293
+      "size": 11824109
     }
   ]
 }
