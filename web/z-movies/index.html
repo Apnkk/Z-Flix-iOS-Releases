@@ -2,16 +2,73 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/icon.png" />
+    <link rel="icon" href="./icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
     <title>Z-Movies</title>
-    <script type="module" crossorigin src="/assets/index-CATjVLLN.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BU7SlWYc.css">
+    <script>
+      window.isTauri = true;
+      window.__TAURI_INTERNALS__ = {
+        metadata: {
+          currentWindow: { label: 'main' },
+          currentWebview: { label: 'main' }
+        },
+        transformCallback: function(callback, once) {
+          var id = Math.floor(Math.random() * 1000000);
+          window['_' + id] = function(res) {
+            try { callback(res); } catch (e) { console.error(e); }
+            if (once) delete window['_' + id];
+          };
+          return id;
+        },
+        invoke: async function(cmd, args) {
+          console.log('[Tauri Bridge]', cmd, args);
+          if (cmd === 'start_media_proxy') return 0;
+          if (cmd === 'plugin:event|listen') return 1;
+          if (cmd === 'plugin:event|unlisten') return;
+          if (cmd === 'plugin:window|is_maximized') return true;
+          if (cmd === 'plugin:window|on_resized') return 1;
+          if (cmd === 'logout_auth') {
+            try { localStorage.clear(); } catch(e){}
+            return;
+          }
+          if (cmd === 'fetch_text' || cmd === 'fetch_text_insecure') {
+            try {
+              var headers = {};
+              if (args && args.referer) headers['Referer'] = args.referer;
+              var res = await fetch(args.url, { headers: headers });
+              return await res.text();
+            } catch (e) {
+              console.warn('fetch_text error:', e);
+              return null;
+            }
+          }
+          if (cmd === 'fetch_post_form') {
+            try {
+              var res = await fetch(args.url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: args.body
+              });
+              return await res.text();
+            } catch (e) {
+              console.warn('fetch_post_form error:', e);
+              return null;
+            }
+          }
+          return null;
+        }
+      };
+      window.addEventListener('error', function(e) {
+        console.error('App Error:', e.error || e.message);
+      });
+    </script>
+    <script type="module" crossorigin src="./assets/index-CATjVLLN.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BU7SlWYc.css">
   </head>
-  <body>
+  <body style="background-color: #000000; margin: 0; padding: 0; overflow-x: hidden;">
     <div id="root"></div>
   </body>
 </html>

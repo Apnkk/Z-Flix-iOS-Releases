@@ -37,10 +37,13 @@ jobs:
           cp ../assets/zmovies_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/icon.png
           echo '{"images":[{"filename":"icon.png","idiom":"universal","platform":"ios","size":"1024x1024"}],"info":{"author":"xcode","version":1}}' > ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
 
-          # Configure Info.plist with correct name and version
+          # Configure Info.plist with correct name, version, status bar, and ATS
           plutil -replace CFBundleDisplayName -string "Z-Movies" ios/App/App/Info.plist || true
           plutil -replace CFBundleShortVersionString -string "6.0.63" ios/App/App/Info.plist || true
           plutil -replace CFBundleVersion -string "6.0.63" ios/App/App/Info.plist || true
+          plutil -replace NSAppTransportSecurity -xml "<dict><key>NSAllowsArbitraryLoads</key><true/></dict>" ios/App/App/Info.plist || true
+          plutil -replace UIViewControllerBasedStatusBarAppearance -bool false ios/App/App/Info.plist || true
+          plutil -replace UIStatusBarStyle -string "UIStatusBarStyleLightContent" ios/App/App/Info.plist || true
 
       - name: Build iOS Archive with Xcode
         run: |
@@ -119,10 +122,13 @@ jobs:
           cp ../assets/zanimes_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/icon.png
           echo '{"images":[{"filename":"icon.png","idiom":"universal","platform":"ios","size":"1024x1024"}],"info":{"author":"xcode","version":1}}' > ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
 
-          # Configure Info.plist with correct name and version
+          # Configure Info.plist with correct name, version, status bar, and ATS
           plutil -replace CFBundleDisplayName -string "Z-Animes" ios/App/App/Info.plist || true
           plutil -replace CFBundleShortVersionString -string "6.0.117" ios/App/App/Info.plist || true
           plutil -replace CFBundleVersion -string "6.0.117" ios/App/App/Info.plist || true
+          plutil -replace NSAppTransportSecurity -xml "<dict><key>NSAllowsArbitraryLoads</key><true/></dict>" ios/App/App/Info.plist || true
+          plutil -replace UIViewControllerBasedStatusBarAppearance -bool false ios/App/App/Info.plist || true
+          plutil -replace UIStatusBarStyle -string "UIStatusBarStyleLightContent" ios/App/App/Info.plist || true
 
       - name: Build iOS Archive with Xcode
         run: |
