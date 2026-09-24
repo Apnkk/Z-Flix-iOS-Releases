@@ -1,0 +1,201 @@
+name: Build Z-Flix iOS IPAs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'web/**'
+      - '.github/workflows/build-all-ipas.yml'
+
+jobs:
+  build-movies:
+    name: Build Z-Movies IPA
+    runs-on: macos-14
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Package Z-Movies with Capacitor
+        run: |
+          mkdir -p build_movies
+          cd build_movies
+          npm init -y
+          npm install @capacitor/core@latest @capacitor/cli@latest @capacitor/ios@latest
+          cp -r ../web/z-movies ./dist
+          npx cap init "Z-Movies" "com.zflix.movies" --web-dir ./dist
+          npx cap add ios
+
+          # Copy app icon if available
+          if [ -f "../assets/zmovies_icon.png" ]; then
+            cp ../assets/zmovies_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png 2>/dev/null || true
+          fi
+
+      - name: Build iOS Archive with Xcode
+        run: |
+          cd build_movies/ios/App
+          xcodebuild archive \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Z-Movies.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
+
+      - name: Package into IPA
+        run: |
+          rm -rf "$RUNNER_TEMP/Payload"
+          mkdir -p "$RUNNER_TEMP/Payload"
+          cp -r "$RUNNER_TEMP/Z-Movies.xcarchive/Products/Applications/App.app" "$RUNNER_TEMP/Payload/Z-Movies.app"
+          cd "$RUNNER_TEMP"
+          zip -r9 "$GITHUB_WORKSPACE/Z-Movies.ipa" Payload
+
+      - name: Upload Movies IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Z-Movies-IPA
+          path: Z-Movies.ipa
+
+      - name: Release Z-Movies IPA
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v6.0.63"
+          name: "Z-Movies iOS v6.0.63"
+          body: |
+            ### Z-Movies iOS — Liquid Glass Edition
+            * Version officielle iOS prête pour Feather, AltStore, SideStore et TrollStore
+            * Interface épurée Liquid Glass avec thème sombre AMOLED
+            * Streaming de films et séries en VF et VOSTFR sans publicité
+            * Lecteur HLS avec reprise automatique et sous-titres
+          files: Z-Movies.ipa
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-animes:
+    name: Build Z-Animes IPA
+    runs-on: macos-14
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Package Z-Animes with Capacitor
+        run: |
+          mkdir -p build_animes
+          cd build_animes
+          npm init -y
+          npm install @capacitor/core@latest @capacitor/cli@latest @capacitor/ios@latest
+          cp -r ../web/z-animes ./dist
+          npx cap init "Z-Animes" "com.zflix.animes" --web-dir ./dist
+          npx cap add ios
+
+          # Copy app icon if available
+          if [ -f "../assets/zanimes_icon.png" ]; then
+            cp ../assets/zanimes_icon.png ios/App/App/Assets.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png 2>/dev/null || true
+          fi
+
+      - name: Build iOS Archive with Xcode
+        run: |
+          cd build_animes/ios/App
+          xcodebuild archive \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Z-Animes.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
+
+      - name: Package into IPA
+        run: |
+          rm -rf "$RUNNER_TEMP/Payload"
+          mkdir -p "$RUNNER_TEMP/Payload"
+          cp -r "$RUNNER_TEMP/Z-Animes.xcarchive/Products/Applications/App.app" "$RUNNER_TEMP/Payload/Z-Animes.app"
+          cd "$RUNNER_TEMP"
+          zip -r9 "$GITHUB_WORKSPACE/Z-Animes.ipa" Payload
+
+      - name: Upload Animes IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Z-Animes-IPA
+          path: Z-Animes.ipa
+
+      - name: Release Z-Animes IPA
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v6.0.117"
+          name: "Z-Animes iOS v6.0.117"
+          body: |
+            ### Z-Animes iOS — Liquid Glass Edition
+            * Version officielle iOS prête pour Feather, AltStore, SideStore et TrollStore
+            * Interface épurée Liquid Glass avec thème sombre AMOLED
+            * Catalogue d'animés complet en VF et VOSTFR sans publicité
+            * Lecteur HLS avec reprise automatique et sous-titres
+          files: Z-Animes.ipa
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  update-feather:
+    name: Update Feather Repository JSON
+    needs: [build-movies, build-animes]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Movies Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Z-Movies-IPA
+          path: ./movies-out
+
+      - name: Download Animes Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Z-Animes-IPA
+          path: ./animes-out
+
+      - name: Update feather.json with exact sizes
+        run: |
+          MOVIES_SIZE=$(stat -c%s ./movies-out/Z-Movies.ipa 2>/dev/null || echo 25000000)
+          ANIMES_SIZE=$(stat -c%s ./animes-out/Z-Animes.ipa 2>/dev/null || echo 25000000)
+          NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          python3 -c "
+          import json
+
+          with open('feather.json', 'r') as f:
+              data = json.load(f)
+
+          for app in data.get('apps', []):
+              if app.get('name') == 'Z-Movies':
+                  app['size'] = int('$MOVIES_SIZE')
+                  app['versionDate'] = '$NOW'
+              elif app.get('name') == 'Z-Animes':
+                  app['size'] = int('$ANIMES_SIZE')
+                  app['versionDate'] = '$NOW'
+
+          with open('feather.json', 'w') as f:
+              json.dump(data, f, indent=2)
+          "
+
+          git config user.name "Apnkk"
+          git config user.email "apnkk@users.noreply.github.com"
+          git add feather.json
+          git commit -m "chore: update feather.json with live IPA builds" || true
+          git push origin main || true

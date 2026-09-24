@@ -1,0 +1,44 @@
+Platform card hover loops — public brand assets only. No DRM streams.
+
+USED
+- disney.mp4 (~706 KB, 7.3s, 320x180)
+  Disney+ brand-tile hover (castle). Official UI loop, originally Disney+ CDN
+  timestamps 1564674844-disney.mp4. Public copy:
+  https://raw.githubusercontent.com/CleverProgrammers/cp-disney-plus-clone/master/public/videos/1564674844-disney.mp4
+- marvel.mp4 (~689 KB, 7.1s, 320x180)
+  Disney+ Marvel brand-tile hover (comic flip). Same family:
+  https://raw.githubusercontent.com/CleverProgrammers/cp-disney-plus-clone/master/public/videos/1564676115-marvel.mp4
+- netflix.mp4 (~15 KB, 1.8s, 1280x720)
+  N ribbon on black (logo hold). Trimmed from mrtxiv/networks-video-collection
+  netflix.mp4 (was 4.1s tudum / spectrum ident).
+  https://raw.githubusercontent.com/mrtxiv/networks-video-collection/main/networks%20videos/netflix.mp4
+- max.mp4 (~148 KB, 1.4s, 1280x720)
+  HBO Max wordmark hold. Trimmed from same pack hbomax.mp4 (was 4.1s bumper).
+  https://raw.githubusercontent.com/mrtxiv/networks-video-collection/main/networks%20videos/hbomax.mp4
+- apple.mp4 (~12 KB, 2.2s, 1280x720)
+  Iridescent Apple TV logo hold. Trimmed from same pack appletv.mp4
+  (was 5.1s glass ident).
+  https://raw.githubusercontent.com/mrtxiv/networks-video-collection/main/networks%20videos/appletv.mp4
+- prime.mp4 (~52 KB, 1.5s, 1280x720)
+  prime video wordmark on dark field. Trimmed from same pack amazonprime.mp4
+  (was 6.1s 1080p staircase ident; previous bundle was 6.4 MB 4K).
+  https://raw.githubusercontent.com/mrtxiv/networks-video-collection/main/networks%20videos/amazonprime.mp4
+- paramount.mp4 (~151 KB, 1.9s, 1280x720)
+  Paramount+ mountain+stars on blue field. Trimmed from same pack
+  paramount.mp4 (5.3s). Replaces 21s Paramount Pictures mountain (3.4 MB).
+  https://raw.githubusercontent.com/mrtxiv/networks-video-collection/main/networks%20videos/paramount.mp4
+- canal.mp4 (~523 KB, 1.5s, 1280x720)
+  Canal+ logo on mosaic grid hold. Trimmed from previous 15.6s 2009 ident
+  (Archive.org youtube-QRr28RI1TIg). No short public 2020 moving-logo MP4.
+- dc.mp4 (~135 KB, 4.0s, 1280x720)
+  Official idle 2016 DC logo (public/art/platforms/dc.png) as a short looping
+  tile (slow zoom on black). Matches 6.0.30 idle art.
+
+NOT BUNDLED / SKIPPED
+- Archive.org dc-comics-original-short-logo-high-tone (~5.3s, 480x360):
+  2005 swirl / DC Comics sting. Grainy SD, letterboxed, era mismatch vs
+  idle 2016 mark. Handheld theater capture still skipped.
+- CleverProgrammers pixar / star-wars / national-geographic tiles — not
+  platform cards.
+
+Idle = official 6.0.30 logos. Hover play/stop + clip padding kept.
