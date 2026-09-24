@@ -1,87 +1,67 @@
 <p align="center">
-  <img src="assets/ares_logo.png" width="100" height="100" style="border-radius: 22px;" alt="Z-Flix By Ares">
+  <img src="assets/zmovies_icon.png" width="90" height="90" style="border-radius: 20px; margin: 0 10px;" alt="Z-Movies">
+  <img src="assets/zanimes_icon.png" width="90" height="90" style="border-radius: 20px; margin: 0 10px;" alt="Z-Animes">
 </p>
 
-<h1 align="center">Z-Flix iOS By Ares</h1>
+<h1 align="center">Z-Flix iOS — Z-Movies & Z-Animes</h1>
 
 <p align="center">
-  <b>La suite ultime de streaming gratuit (Films, Séries, Animes) pour iOS.</b><br>
-  Propulsé par la nouvelle interface <b>Apple Liquid Glass</b>, fond AMOLED pur, navigation flottante et lecteur vidéo haute performance.
-</p>
-
-<p align="center">
-  <a href="https://github.com/Apnkk/Z-Flix-iOS-Releases/releases/latest">
-    <img src="https://img.shields.io/github/v/release/Apnkk/Z-Flix-iOS-Releases?style=for-the-badge&color=E50914&logo=apple&logoColor=white" alt="Latest Release">
-  </a>
-  <img src="https://img.shields.io/badge/iOS-15.0%2B-black?style=for-the-badge&logo=apple&logoColor=white" alt="iOS 15+">
-  <img src="https://img.shields.io/badge/Feather-Supported-848ef9?style=for-the-badge" alt="Feather Supported">
-  <img src="https://img.shields.io/badge/Install-TrollStore%20%7C%20Sideload-5865F2?style=for-the-badge" alt="TrollStore | Sideload">
+  Dépôt officiel des builds iOS (IPAs) et source Feather / AltStore pour <b>Z-Movies</b> et <b>Z-Animes</b>.<br>
+  Interface style Liquid Glass, thème AMOLED et lecteur optimisé sans pubs.
 </p>
 
 <p align="center">
-  <a href="#-ajouter-sur-feather--altstore">Ajouter sur Feather</a> •
-  <a href="#-applications-disponibles">Applications</a> •
-  <a href="#-fonctionnalités-liquid-glass">Liquid Glass UI</a> •
-  <a href="#-installation">Installation</a> •
-  <a href="#-créateur">Créateur</a>
+  <img src="https://img.shields.io/badge/iOS-15.0%2B-000000?style=flat-square&logo=apple&logoColor=white" alt="iOS 15+">
+  <img src="https://img.shields.io/badge/Feather-Source%20Ready-848ef9?style=flat-square" alt="Feather">
+  <img src="https://img.shields.io/badge/TrollStore-Compatible-34C759?style=flat-square" alt="TrollStore">
+  <img src="https://img.shields.io/badge/AltStore%20%2F%20SideStore-Supported-007AFF?style=flat-square" alt="AltStore">
 </p>
 
 ---
 
-## 📲 Ajouter sur Feather / AltStore
+## 📲 Source Feather / AltStore
 
-### 🪶 Dans Feather (Recommandé)
-1. Ouvrez l'application **Feather** sur votre iPhone / iPad.
-2. Allez dans **Sources** > Cliquez sur **+** (Ajouter une source).
-3. Collez ce lien direct :
+### 🪶 Ajouter à Feather
+1. Ouvrir **Feather** sur iPhone / iPad
+2. Aller dans l'onglet **Sources** > appuyer sur **+**
+3. Coller l'URL suivante :
 ```text
 https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/feather.json
 ```
-4. Cliquez sur **Ajouter** : Z-Movies et Z-Animes apparaîtront directement prêts à être installés !
+4. Valider : les fiches **Z-Movies** et **Z-Animes** s'affichent avec les téléchargements directs.
 
-### 🔷 Dans AltStore / SideStore
-Cliquez sur ce lien direct depuis Safari sur votre iPhone :
+### 🔷 Ajouter à AltStore / SideStore
+Ouvrir ce lien depuis Safari sur votre iPhone :  
 👉 **[Ajouter la source à AltStore](altstore://source?url=https://raw.githubusercontent.com/Apnkk/Z-Flix-iOS-Releases/main/feather.json)**
 
 ---
 
-## 🎬 Applications disponibles
+## 🎬 Applications
 
-| Application | Bundle ID | Description | Thème |
-| :--- | :--- | :--- | :--- |
-| <img src="assets/zmovies_icon.png" width="32" style="vertical-align: middle; border-radius: 8px;"> **Z-Movies** | `com.zflix.movies` | Films, séries et documentaires en streaming illimité, VF & VOSTFR sans coupures. | Liquid Red |
-| <img src="assets/zanimes_icon.png" width="32" style="vertical-align: middle; border-radius: 8px;"> **Z-Animes** | `com.zflix.animes` | Catalogue complet d'animés japonais, épisodes à jour, sélecteur de saisons et pistes audio. | Liquid Orange |
+### 🍿 Z-Movies (`com.zflix.movies`)
+* Streaming de films, séries et documentaires
+* Choix des flux VF et VOSTFR
+* Lecteur HLS avec reprise automatique et sous-titres
+* UI épurée Liquid Glass avec fond AMOLED
 
----
-
-## ✨ Fonctionnalités Liquid Glass
-
-* 🪟 **Liquid Glass UI d'Apple** — Panneaux translucides avec réfraction dynamique de la lumière, bordures spéculaires et flou haute fidélité (`backdrop-filter: blur(28px) saturate(180%)`).
-* 🖤 **Dark Mode AMOLED Pur** — Fond noir `#000000` parfait pour préserver la batterie des écrans OLED.
-* 💊 **Floating Pill Dock** — Barre de navigation flottante façon Apple VisionOS / Spotify Mod.
-* ⚡ **Streaming Vidéo HLS Natif** — Lecteur ultra fluide, reprise de lecture automatique, gestion des sous-titres et résolutions.
-* 🚫 **Zéro Publicité** — Visionnage direct, propre et sans interruptions.
+### 🍙 Z-Animes (`com.zflix.animes`)
+* Catalogue d'animés complet (simulcasts, saisons complètes, films)
+* Sélecteur d'épisodes, de saisons et de lecteurs
+* Versions VF et VOSTFR
+* Navigation fluide pensée pour mobile et iPad
 
 ---
 
-## 📦 Téléchargement direct des IPAs
+## 🛠️ Installation (Sideload)
 
-Si vous préférez installer manuellement les fichiers `.ipa` :
-* 📥 **[Z-Movies IPA (Dernière version)](https://github.com/Apnkk/Z-Flix-iOS-Releases/releases)**
-* 📥 **[Z-Animes IPA (Dernière version)](https://github.com/Apnkk/Z-Flix-iOS-Releases/releases)**
-
----
-
-## 🛠️ Méthodes d'installation (Sideloading)
-
-* **Feather** : Ajoutez notre repo JSON ci-dessus, téléchargez et signez directement sur l'appareil.
-* **TrollStore** (iOS 14.0 - 17.0) : Installez l'IPA directement dans TrollStore pour une signature permanente et sans limite de 7 jours.
-* **SideStore / AltStore** : Installation via WiFi sans ordinateur une fois configuré.
-* **Scarlet / ESign / Sideloadly** : Glissez-déposez le fichier `.ipa` et signez avec votre certificat.
+* **Feather** : Ajout via le lien de source ci-dessus, signature sur l'appareil.
+* **TrollStore** : Compatible pour une installation permanente sans expiration des 7 jours (iOS 14.0 à 17.0).
+* **SideStore / AltStore** : Installation et rafraîchissement automatique en WiFi.
+* **Scarlet / ESign / Sideloadly** : Télécharger l'IPA depuis les [Releases](https://github.com/Apnkk/Z-Flix-iOS-Releases/releases) et signer avec votre certificat.
 
 ---
 
-## 👤 Créateur
+## 👤 Infos
 
-Développé par **Ares** ([@xw2tt sur Discord](https://discord.dog/280054039536730112))  
-Site officiel : [aress.ovh](https://aress.ovh)
+* Développé et maintenu par **Ares** ([aress.ovh](https://aress.ovh))
+* Discord : `@xw2tt`
