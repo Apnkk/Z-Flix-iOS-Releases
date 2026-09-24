@@ -1,8 +1,3 @@
-<p align="center">
-  <img src="assets/zmovies_icon.png" width="90" height="90" style="border-radius: 20px; margin: 0 10px;" alt="Z-Movies">
-  <img src="assets/zanimes_icon.png" width="90" height="90" style="border-radius: 20px; margin: 0 10px;" alt="Z-Animes">
-</p>
-
 <h1 align="center">Z-Flix iOS — Z-Movies & Z-Animes</h1>
 
 <p align="center">
