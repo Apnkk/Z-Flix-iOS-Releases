@@ -415,58 +415,114 @@
       }
 
       /* ============================================================
-         APPLE LIQUID GLASS LOGIN GATE CARD
+         AUTHENTIC APPLE LIQUID GLASS LOGIN GATE & PROFILE PICKER
          ============================================================ */
-      .login-gate {
-        padding: 24px !important;
-        background: radial-gradient(circle at 50% 25%, rgba(255, 42, 68, 0.18), transparent 60%), #000000 !important;
+      .login-gate,
+      .who-page {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        min-height: 100vh !important;
+        min-height: 100dvh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: calc(env(safe-area-inset-top, 24px) + 20px) 20px calc(env(safe-area-inset-bottom, 20px) + 24px) 20px !important;
+        box-sizing: border-box !important;
+        background: radial-gradient(ellipse 90% 65% at 50% 30%, rgba(255, 42, 68, 0.2), transparent 70%), #000000 !important;
+        z-index: 10000 !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
       }
+
       .login-card {
         width: 100% !important;
         max-width: 360px !important;
+        margin: auto !important;
         background: rgba(22, 20, 30, 0.65) !important;
-        -webkit-backdrop-filter: blur(45px) saturate(210%) !important;
-        backdrop-filter: blur(45px) saturate(210%) !important;
+        -webkit-backdrop-filter: blur(50px) saturate(220%) !important;
+        backdrop-filter: blur(50px) saturate(220%) !important;
         border: 0.5px solid rgba(255, 255, 255, 0.22) !important;
-        border-radius: 32px !important;
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4) !important;
-        padding: 32px 24px !important;
+        border-radius: 36px !important;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.45) !important;
+        padding: 36px 24px 28px 24px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
       }
-      .login-actions .btn {
+
+      .login-actions {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        margin-top: 24px !important;
+      }
+
+      .login-actions .btn,
+      .login-actions button {
+        width: 100% !important;
         border-radius: 999px !important;
-        padding: 13px 20px !important;
+        padding: 14px 20px !important;
         font-weight: 700 !important;
         font-size: 14.5px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         gap: 10px !important;
+        box-sizing: border-box !important;
+        transition: transform 0.15s ease !important;
+        cursor: pointer !important;
       }
-      .login-actions .btn.cta {
+      .login-actions .btn:active,
+      .login-actions button:active {
+        transform: scale(0.97) !important;
+      }
+
+      /* First button: Discord */
+      .login-actions .btn.cta,
+      .login-actions > button:nth-of-type(1),
+      .login-actions > div > button:nth-of-type(1) {
         background: #5865F2 !important;
+        color: #ffffff !important;
         border: 0.5px solid rgba(255, 255, 255, 0.3) !important;
         box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
       }
-      .login-actions .btn:not(.cta) {
+
+      /* Second button: Google */
+      .login-actions .btn:not(.cta),
+      .login-actions > button:nth-of-type(2),
+      .login-actions > div > button:nth-of-type(2) {
         background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
         color: #1a1a1a !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
       }
+
+      /* Third button: Invité */
       .login-guest-trigger {
-        margin-top: 14px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 0.5px solid rgba(255, 255, 255, 0.18);
-        border-radius: 999px;
-        padding: 10px 18px;
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        width: 100%;
-        box-sizing: border-box;
+        margin-top: 8px !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 0.5px solid rgba(255, 255, 255, 0.18) !important;
+        border-radius: 999px !important;
+        padding: 12px 18px !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        transition: transform 0.15s ease !important;
+      }
+      .login-guest-trigger:active {
+        transform: scale(0.97) !important;
       }
     </style>
     <script>
@@ -762,6 +818,10 @@
           else document.body.classList.remove('is-watching');
           if (hasLogin) {
             document.body.classList.add('has-login-gate');
+            var sub = document.querySelector('.login-card p:nth-of-type(2)');
+            if (sub && sub.innerText.includes('re135rise')) {
+              sub.innerText = sub.innerText.replace('re135rise', 'reprise');
+            }
             var acts = document.querySelector('.login-actions');
             if (acts && !document.getElementById('guestLoginBtn')) {
               var gBtn = document.createElement('button');
